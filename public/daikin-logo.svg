@@ -1,0 +1,9 @@
+<svg width="160" height="40" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="160" height="40" rx="6" fill="#007AC2" fill-opacity="0.08" />
+  <path d="M20 28H14V12H20C24.4183 12 28 15.5817 28 20C28 24.4183 24.4183 28 20 28Z" fill="#007AC2" />
+  <path d="M36 28H32V12H36L44 22V12H48V28H44L36 18V28Z" fill="#1F4F7A" />
+  <path d="M60 28H54V12H58V24H60C62.2091 24 64 22.2091 64 20C64 17.7909 62.2091 16 60 16H58V12H60C64.4183 12 68 15.5817 68 20C68 24.4183 64.4183 28 60 28Z" fill="#007AC2" />
+  <path d="M74 12H78V28H74V12Z" fill="#1F4F7A" />
+  <path d="M90 28H86V12H90L98 22V12H102V28H98L90 18V28Z" fill="#007AC2" />
+  <text x="108" y="25" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#1F4F7A">DAIKIN</text>
+</svg>
