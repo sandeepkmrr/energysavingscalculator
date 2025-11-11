@@ -14,5 +14,6 @@ class ResizeObserver {
   }
 }
 
-// @ts-expect-error Global assignment for jsdom environment
-global.ResizeObserver = ResizeObserver;
+(
+  globalThis as unknown as { ResizeObserver: typeof ResizeObserver }
+).ResizeObserver = ResizeObserver;

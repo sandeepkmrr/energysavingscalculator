@@ -54,11 +54,12 @@ const AdvancedWithPrefill = (props: SystemSetupProps) => {
   );
 };
 
-export default {
+const systemCardStories = {
   title: 'Wizard/SystemCard',
   component: SystemSetup,
 };
 
+export default systemCardStories;
 export const Default = () => <StoryWrapper />;
 Default.storyName = 'SystemCard.Default';
 Default.parameters = {

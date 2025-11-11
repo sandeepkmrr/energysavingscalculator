@@ -34,14 +34,12 @@ interface LifecycleTooltipProps {
   unit: string;
 }
 
-const STACK_ORDER: Array<keyof LifecycleAreaDatum> = [
-  'energy',
-  'maintenance',
-  'capex',
-];
+type LifecycleStackKey = Exclude<keyof LifecycleAreaDatum, 'year'>;
+
+const STACK_ORDER: LifecycleStackKey[] = ['energy', 'maintenance', 'capex'];
 
 const STACK_COLORS: Record<
-  keyof LifecycleAreaDatum,
+  LifecycleStackKey,
   { stroke: string; fill: string; label: string }
 > = {
   energy: {

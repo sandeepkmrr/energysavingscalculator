@@ -14,6 +14,7 @@ import {
 import { Modal } from '@/components/shared/Modal';
 import { PrimaryButton, SecondaryButton } from '@/components/shared';
 import { type Project } from '@/lib/mockData';
+import Image from 'next/image';
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -200,20 +201,26 @@ export function ReportPreviewModal({
     >
       <article className="printable relative overflow-hidden bg-white text-sm text-daikin-gray-500">
         <div className="pointer-events-none absolute inset-0 opacity-5">
-          <img
+          <Image
             src="/daikin-logo.svg"
             alt=""
-            className="h-full w-full object-cover"
+            fill
+            className="object-cover"
+            priority
             aria-hidden="true"
+            sizes="100vw"
           />
         </div>
 
         <header className="relative flex items-center justify-between border-b border-daikin-gray-100 pb-4">
           <div className="flex items-center gap-3">
-            <img
+            <Image
               src="/daikin-logo.svg"
               alt="Daikin logo"
+              width={120}
+              height={32}
               className="h-8 w-auto"
+              priority
             />
             <div>
               <h2 className="text-lg font-semibold text-primary">
