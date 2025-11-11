@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useWizard } from '@/contexts/WizardContext';
+import type { WizardFormData } from '@/contexts/WizardContext';
 import { Card } from '@/components/shared/Card';
 import { FormField } from '@/components/shared/FormField';
 import { Select } from '@/components/shared/Select';
 import { NumberInput } from '@/components/shared/NumberInput';
+import { InfoTooltip } from '@/components/shared/InfoTooltip';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { PrimaryButton, SecondaryButton } from '@/components/shared';
@@ -35,14 +37,24 @@ const CAPACITY_OPTIONS = [
 
 export interface SystemSetupProps {
   onCalculate?: (results: any) => void;
+  defaultBaselineAdvancedOpen?: boolean;
+  defaultCompareAdvancedOpen?: boolean;
 }
 
-export function SystemSetup({ onCalculate }: SystemSetupProps) {
+export function SystemSetup({
+  onCalculate,
+  defaultBaselineAdvancedOpen,
+  defaultCompareAdvancedOpen,
+}: SystemSetupProps) {
   const router = useRouter();
   const { formData, updateFormData, setResults } = useWizard();
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [showAdvancedBaseline, setShowAdvancedBaseline] = useState(false);
-  const [showAdvancedCompare, setShowAdvancedCompare] = useState(false);
+  const [showAdvancedBaseline, setShowAdvancedBaseline] = useState(
+    defaultBaselineAdvancedOpen ?? true
+  );
+  const [showAdvancedCompare, setShowAdvancedCompare] = useState(
+    defaultCompareAdvancedOpen ?? true
+  );
   const [showRebate, setShowRebate] = useState(true);
   const [isCalculating, setIsCalculating] = useState(false);
 
@@ -59,6 +71,32 @@ export function SystemSetup({ onCalculate }: SystemSetupProps) {
     formData.compareSystem.capacityTons === undefined
       ? ''
       : String(formData.compareSystem.capacityTons);
+
+  const hasValue = (value?: string | number | null) => {
+    if (value === null || value === undefined) {
+      return false;
+    }
+
+    if (typeof value === 'string') {
+      return value.trim().length > 0;
+    }
+
+    return true;
+  };
+
+  const baselineCop47HelperText =
+    !hasValue(formData.baselineSystem.cop47) &&
+    hasValue(formData.baselineSystem.cop17) &&
+    !errors['baseline-cop47']
+      ? 'No COP @47°F provided — system will use COP @17°F for heating calculations unless overridden.'
+      : undefined;
+
+  const compareCop47HelperText =
+    !hasValue(formData.compareSystem.cop47) &&
+    hasValue(formData.compareSystem.cop17) &&
+    !errors['compare-cop47']
+      ? 'No COP @47°F provided — system will use COP @17°F for heating calculations unless overridden.'
+      : undefined;
 
   // Sync compare system capacity with baseline
   useEffect(() => {
@@ -96,6 +134,76 @@ export function SystemSetup({ onCalculate }: SystemSetupProps) {
       [field]: value,
     };
     updateFormData({ compareSystem: updatedCompare });
+
+    if (errors[`compare-${field}`]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[`compare-${field}`];
+        return newErrors;
+      });
+    }
+  };
+
+  const handleCopChange = (
+    system: 'baselineSystem' | 'compareSystem',
+    field: 'cop47' | 'cop17',
+    rawValue: string
+  ) => {
+    const trimmedValue = rawValue;
+    const targetSystem =
+      system === 'baselineSystem'
+        ? formData.baselineSystem
+        : formData.compareSystem;
+
+    const updatedSystem = {
+      ...targetSystem,
+      [field]: trimmedValue,
+    };
+
+    updateFormData({ [system]: updatedSystem } as Partial<WizardFormData>);
+
+    const errorKeyPrefix = system === 'baselineSystem' ? 'baseline' : 'compare';
+    const errorKey = `${errorKeyPrefix}-${field}`;
+    const valueToCheck = trimmedValue.trim();
+
+    if (valueToCheck === '') {
+      setErrors((prev) => {
+        if (!prev[errorKey]) {
+          return prev;
+        }
+        const next = { ...prev };
+        delete next[errorKey];
+        return next;
+      });
+      return;
+    }
+
+    const numericValue = Number(valueToCheck);
+
+    if (!Number.isFinite(numericValue)) {
+      setErrors((prev) => ({
+        ...prev,
+        [errorKey]: 'Please enter a valid numeric COP (e.g., 3.2).',
+      }));
+      return;
+    }
+
+    if (numericValue <= 0) {
+      setErrors((prev) => ({
+        ...prev,
+        [errorKey]: 'COP must be greater than zero.',
+      }));
+      return;
+    }
+
+    setErrors((prev) => {
+      if (!prev[errorKey]) {
+        return prev;
+      }
+      const next = { ...prev };
+      delete next[errorKey];
+      return next;
+    });
   };
 
   const isFormValid = (): boolean => {
@@ -328,40 +436,106 @@ export function SystemSetup({ onCalculate }: SystemSetupProps) {
                 <div
                   className="mt-4 space-y-4"
                   role="region"
-                  aria-label="Advanced settings"
+                  aria-label="Advanced settings for baseline system"
                 >
-                  <FormField label="EER" htmlFor="baseline-eer">
-                    <Input
-                      id="baseline-eer"
-                      value={formData.baselineSystem.eer || ''}
-                      onChange={(e) =>
-                        handleBaselineChange('eer', e.target.value)
-                      }
-                      placeholder="Enter EER"
-                    />
-                  </FormField>
+                  <p className="text-xs text-daikin-gray-500">
+                    Enter COP values if available. COP @17°F is recommended for
+                    cold-climate analyses (Climate Zones 5+).
+                  </p>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <FormField label="EER" htmlFor="baseline-eer">
+                      <Input
+                        id="baseline-eer"
+                        value={formData.baselineSystem.eer || ''}
+                        onChange={(e) =>
+                          handleBaselineChange('eer', e.target.value)
+                        }
+                        placeholder="Enter EER"
+                      />
+                    </FormField>
 
-                  <FormField label="IEER" htmlFor="baseline-ieer">
-                    <Input
-                      id="baseline-ieer"
-                      value={formData.baselineSystem.ieer || ''}
-                      onChange={(e) =>
-                        handleBaselineChange('ieer', e.target.value)
-                      }
-                      placeholder="Enter IEER"
-                    />
-                  </FormField>
+                    <FormField label="IEER" htmlFor="baseline-ieer">
+                      <Input
+                        id="baseline-ieer"
+                        value={formData.baselineSystem.ieer || ''}
+                        onChange={(e) =>
+                          handleBaselineChange('ieer', e.target.value)
+                        }
+                        placeholder="Enter IEER"
+                      />
+                    </FormField>
 
-                  <FormField label="COP" htmlFor="baseline-cop">
-                    <Input
-                      id="baseline-cop"
-                      value={formData.baselineSystem.cop || ''}
-                      onChange={(e) =>
-                        handleBaselineChange('cop', e.target.value)
+                    {/* NOTE for backend: prefer COP @47°F for standard heating; COP @17°F used for low-ambient adjustments. If only cop_17 is present, front-end will surface helper text indicating cop_17 will be used as fallback. */}
+                    <FormField
+                      label={
+                        <span className="flex items-center text-sm font-medium text-daikin-gray-600">
+                          COP @ 47°F (Rated Heating)
+                          <InfoTooltip
+                            id="baseline-cop47-tooltip"
+                            content="COP @47°F: Coefficient of Performance measured at AHRI standard heating condition (47°F). Used for standard-season heating performance."
+                            aria-label="Details about COP at 47 degrees Fahrenheit"
+                          />
+                        </span>
                       }
-                      placeholder="Enter COP"
-                    />
-                  </FormField>
+                      htmlFor="baseline-cop_47"
+                      helperText={baselineCop47HelperText}
+                      helperTone="informational"
+                      error={errors['baseline-cop47']}
+                      describedByIds={['baseline-cop47-tooltip']}
+                    >
+                      <NumberInput
+                        name="cop_47"
+                        value={formData.baselineSystem.cop47 || ''}
+                        onChange={(event) =>
+                          handleCopChange(
+                            'baselineSystem',
+                            'cop47',
+                            event.target.value
+                          )
+                        }
+                        placeholder="e.g., 3.2"
+                        inputMode="decimal"
+                        step={0.1}
+                        min={0}
+                        aria-label="COP at 47 degrees Fahrenheit (rated heating condition)"
+                        data-test="cop-47-input"
+                      />
+                    </FormField>
+
+                    <FormField
+                      label={
+                        <span className="flex items-center text-sm font-medium text-daikin-gray-600">
+                          COP @ 17°F (Low-Ambient Heating)
+                          <InfoTooltip
+                            id="baseline-cop17-tooltip"
+                            content="COP @17°F: Coefficient of Performance measured at low ambient temperature. Used for cold-climate performance and part-load adjustments."
+                            aria-label="Details about COP at 17 degrees Fahrenheit"
+                          />
+                        </span>
+                      }
+                      htmlFor="baseline-cop_17"
+                      error={errors['baseline-cop17']}
+                      describedByIds={['baseline-cop17-tooltip']}
+                    >
+                      <NumberInput
+                        name="cop_17"
+                        value={formData.baselineSystem.cop17 || ''}
+                        onChange={(event) =>
+                          handleCopChange(
+                            'baselineSystem',
+                            'cop17',
+                            event.target.value
+                          )
+                        }
+                        placeholder="e.g., 2.1"
+                        inputMode="decimal"
+                        step={0.1}
+                        min={0}
+                        aria-label="COP at 17 degrees Fahrenheit (low ambient condition)"
+                        data-test="cop-17-input"
+                      />
+                    </FormField>
+                  </div>
                 </div>
               )}
             </div>
@@ -451,40 +625,105 @@ export function SystemSetup({ onCalculate }: SystemSetupProps) {
                 <div
                   className="mt-4 space-y-4"
                   role="region"
-                  aria-label="Advanced settings"
+                  aria-label="Advanced settings for Daikin inverter system"
                 >
-                  <FormField label="EER" htmlFor="compare-eer">
-                    <Input
-                      id="compare-eer"
-                      value={formData.compareSystem.eer || ''}
-                      onChange={(e) =>
-                        handleCompareChange('eer', e.target.value)
-                      }
-                      placeholder="Enter EER"
-                    />
-                  </FormField>
+                  <p className="text-xs text-daikin-gray-500">
+                    Enter COP values if available. COP @17°F is recommended for
+                    cold-climate analyses (Climate Zones 5+).
+                  </p>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <FormField label="EER" htmlFor="compare-eer">
+                      <Input
+                        id="compare-eer"
+                        value={formData.compareSystem.eer || ''}
+                        onChange={(e) =>
+                          handleCompareChange('eer', e.target.value)
+                        }
+                        placeholder="Enter EER"
+                      />
+                    </FormField>
 
-                  <FormField label="IEER" htmlFor="compare-ieer">
-                    <Input
-                      id="compare-ieer"
-                      value={formData.compareSystem.ieer || ''}
-                      onChange={(e) =>
-                        handleCompareChange('ieer', e.target.value)
-                      }
-                      placeholder="Enter IEER"
-                    />
-                  </FormField>
+                    <FormField label="IEER" htmlFor="compare-ieer">
+                      <Input
+                        id="compare-ieer"
+                        value={formData.compareSystem.ieer || ''}
+                        onChange={(e) =>
+                          handleCompareChange('ieer', e.target.value)
+                        }
+                        placeholder="Enter IEER"
+                      />
+                    </FormField>
 
-                  <FormField label="COP" htmlFor="compare-cop">
-                    <Input
-                      id="compare-cop"
-                      value={formData.compareSystem.cop || ''}
-                      onChange={(e) =>
-                        handleCompareChange('cop', e.target.value)
+                    <FormField
+                      label={
+                        <span className="flex items-center text-sm font-medium text-daikin-gray-600">
+                          COP @ 47°F (Rated Heating)
+                          <InfoTooltip
+                            id="compare-cop47-tooltip"
+                            content="COP @47°F: Coefficient of Performance measured at AHRI standard heating condition (47°F). Used for standard-season heating performance."
+                            aria-label="Details about COP at 47 degrees Fahrenheit"
+                          />
+                        </span>
                       }
-                      placeholder="Enter COP"
-                    />
-                  </FormField>
+                      htmlFor="compare-cop_47"
+                      helperText={compareCop47HelperText}
+                      helperTone="informational"
+                      error={errors['compare-cop47']}
+                      describedByIds={['compare-cop47-tooltip']}
+                    >
+                      <NumberInput
+                        name="cop_47"
+                        value={formData.compareSystem.cop47 || ''}
+                        onChange={(event) =>
+                          handleCopChange(
+                            'compareSystem',
+                            'cop47',
+                            event.target.value
+                          )
+                        }
+                        placeholder="e.g., 3.2"
+                        inputMode="decimal"
+                        step={0.1}
+                        min={0}
+                        aria-label="COP at 47 degrees Fahrenheit (rated heating condition)"
+                        data-test="cop-47-input"
+                      />
+                    </FormField>
+
+                    <FormField
+                      label={
+                        <span className="flex items-center text-sm font-medium text-daikin-gray-600">
+                          COP @ 17°F (Low-Ambient Heating)
+                          <InfoTooltip
+                            id="compare-cop17-tooltip"
+                            content="COP @17°F: Coefficient of Performance measured at low ambient temperature. Used for cold-climate performance and part-load adjustments."
+                            aria-label="Details about COP at 17 degrees Fahrenheit"
+                          />
+                        </span>
+                      }
+                      htmlFor="compare-cop_17"
+                      error={errors['compare-cop17']}
+                      describedByIds={['compare-cop17-tooltip']}
+                    >
+                      <NumberInput
+                        name="cop_17"
+                        value={formData.compareSystem.cop17 || ''}
+                        onChange={(event) =>
+                          handleCopChange(
+                            'compareSystem',
+                            'cop17',
+                            event.target.value
+                          )
+                        }
+                        placeholder="e.g., 2.1"
+                        inputMode="decimal"
+                        step={0.1}
+                        min={0}
+                        aria-label="COP at 17 degrees Fahrenheit (low ambient condition)"
+                        data-test="cop-17-input"
+                      />
+                    </FormField>
+                  </div>
                 </div>
               )}
             </div>

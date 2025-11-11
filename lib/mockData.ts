@@ -14,11 +14,19 @@ export interface Project {
     type: string;
     capacityTons: number;
     units: number;
+    eer?: number;
+    ieer?: number;
+    cop47?: number;
+    cop17?: number;
   };
   systemCompare: {
     type: string;
     capacityTons: number;
     units: number;
+    eer?: number;
+    ieer?: number;
+    cop47?: number;
+    cop17?: number;
   };
   electricRate: number;
   maintenanceCostPerYear: number;
@@ -46,8 +54,20 @@ export const MOCK_PROJECT: Project = {
   location: { city: 'Plano', state: 'TX', climateZone: '3A' },
   buildingType: 'School',
   hoursPerYear: 3500,
-  systemBaseline: { type: 'BE HP', capacityTons: 10, units: 1 },
-  systemCompare: { type: 'INV HP', capacityTons: 10, units: 1 },
+  systemBaseline: {
+    type: 'BE HP',
+    capacityTons: 10,
+    units: 1,
+    cop47: 3.2,
+    cop17: 2.1,
+  },
+  systemCompare: {
+    type: 'INV HP',
+    capacityTons: 10,
+    units: 1,
+    cop47: 3.2,
+    cop17: 2.1,
+  },
   electricRate: 0.12,
   maintenanceCostPerYear: 800,
   rebate: { source: 'EcoRebates', amount: 1500 },

@@ -22,7 +22,8 @@ export interface WizardFormData {
     maintenanceCostPerYear: number | '';
     eer?: string;
     ieer?: string;
-    cop?: string;
+    cop47?: string;
+    cop17?: string;
   };
   compareSystem: {
     type: string;
@@ -31,7 +32,8 @@ export interface WizardFormData {
     maintenanceCostPerYear: number | '';
     eer?: string;
     ieer?: string;
-    cop?: string;
+    cop47?: string;
+    cop17?: string;
   };
   rebate: {
     applyRebate: boolean;
@@ -66,12 +68,36 @@ const createDefaultFormData = (): WizardFormData => ({
     capacityTons: MOCK_PROJECT.systemBaseline.capacityTons,
     units: MOCK_PROJECT.systemBaseline.units,
     maintenanceCostPerYear: MOCK_PROJECT.maintenanceCostPerYear,
+    eer: MOCK_PROJECT.systemBaseline.eer
+      ? String(MOCK_PROJECT.systemBaseline.eer)
+      : undefined,
+    ieer: MOCK_PROJECT.systemBaseline.ieer
+      ? String(MOCK_PROJECT.systemBaseline.ieer)
+      : undefined,
+    cop47: MOCK_PROJECT.systemBaseline.cop47
+      ? String(MOCK_PROJECT.systemBaseline.cop47)
+      : '',
+    cop17: MOCK_PROJECT.systemBaseline.cop17
+      ? String(MOCK_PROJECT.systemBaseline.cop17)
+      : '',
   },
   compareSystem: {
     type: MOCK_PROJECT.systemCompare.type,
     capacityTons: MOCK_PROJECT.systemCompare.capacityTons,
     units: MOCK_PROJECT.systemCompare.units,
     maintenanceCostPerYear: MOCK_PROJECT.maintenanceCostPerYear,
+    eer: MOCK_PROJECT.systemCompare.eer
+      ? String(MOCK_PROJECT.systemCompare.eer)
+      : undefined,
+    ieer: MOCK_PROJECT.systemCompare.ieer
+      ? String(MOCK_PROJECT.systemCompare.ieer)
+      : undefined,
+    cop47: MOCK_PROJECT.systemCompare.cop47
+      ? String(MOCK_PROJECT.systemCompare.cop47)
+      : '',
+    cop17: MOCK_PROJECT.systemCompare.cop17
+      ? String(MOCK_PROJECT.systemCompare.cop17)
+      : '',
   },
   rebate: {
     applyRebate: true,

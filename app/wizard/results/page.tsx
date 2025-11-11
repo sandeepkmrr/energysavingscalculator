@@ -22,6 +22,30 @@ export default function ResultsPage() {
         : Number(formData.compareSystem.capacityTons) ||
           MOCK_PROJECT.systemCompare.capacityTons;
 
+    const parseOptionalNumber = (
+      value: string | number | '' | null | undefined
+    ): number | undefined => {
+      if (typeof value === 'number') {
+        return Number.isFinite(value) ? value : undefined;
+      }
+
+      if (typeof value === 'string') {
+        const trimmed = value.trim();
+        if (trimmed.length === 0) {
+          return undefined;
+        }
+        const numeric = Number(trimmed);
+        return Number.isFinite(numeric) ? numeric : undefined;
+      }
+
+      return undefined;
+    };
+
+    const baselineCop47 = parseOptionalNumber(formData.baselineSystem.cop47);
+    const baselineCop17 = parseOptionalNumber(formData.baselineSystem.cop17);
+    const compareCop47 = parseOptionalNumber(formData.compareSystem.cop47);
+    const compareCop17 = parseOptionalNumber(formData.compareSystem.cop17);
+
     return {
       project: {
         name: formData.projectName || MOCK_PROJECT.project.name,
@@ -45,6 +69,8 @@ export default function ResultsPage() {
             ? formData.baselineSystem.units
             : Number(formData.baselineSystem.units) ||
               MOCK_PROJECT.systemBaseline.units,
+        cop47: baselineCop47,
+        cop17: baselineCop17,
       },
       systemCompare: {
         type: formData.compareSystem.type || MOCK_PROJECT.systemCompare.type,
@@ -54,6 +80,8 @@ export default function ResultsPage() {
             ? formData.compareSystem.units
             : Number(formData.compareSystem.units) ||
               MOCK_PROJECT.systemCompare.units,
+        cop47: compareCop47,
+        cop17: compareCop17,
       },
       electricRate:
         typeof formData.electricRate === 'number'

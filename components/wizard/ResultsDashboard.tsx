@@ -102,6 +102,33 @@ export function ResultsDashboard({ project, results }: ResultsDashboardProps) {
     : results.co2ReductionTonsPerYear;
   const compareCo2 = baselineCo2 - results.co2ReductionTonsPerYear;
 
+  const formatCop = (value?: number) =>
+    typeof value === 'number' && Number.isFinite(value)
+      ? decimalFormatter.format(value)
+      : undefined;
+
+  const baselineCop47Value = (() => {
+    const formatted47 = formatCop(project.systemBaseline.cop47);
+    if (formatted47) {
+      return formatted47;
+    }
+    const fallback17 = formatCop(project.systemBaseline.cop17);
+    return fallback17 ? `— (using COP @17°F = ${fallback17})` : '—';
+  })();
+
+  const baselineCop17Value = formatCop(project.systemBaseline.cop17) ?? '—';
+
+  const compareCop47Value = (() => {
+    const formatted47 = formatCop(project.systemCompare.cop47);
+    if (formatted47) {
+      return formatted47;
+    }
+    const fallback17 = formatCop(project.systemCompare.cop17);
+    return fallback17 ? `— (using COP @17°F = ${fallback17})` : '—';
+  })();
+
+  const compareCop17Value = formatCop(project.systemCompare.cop17) ?? '—';
+
   const energyChartData = useMemo(
     () => [
       {
@@ -406,6 +433,54 @@ export function ResultsDashboard({ project, results }: ResultsDashboardProps) {
               ))}
             </tbody>
           </table>
+        </div>
+      </section>
+
+      <section aria-label="System assumptions" className="space-y-2">
+        <h2 className="text-lg font-semibold text-primary">
+          System Assumptions
+        </h2>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <Card title="Baseline System" className="h-full">
+            <dl className="space-y-3 text-sm text-daikin-gray-500">
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-daikin-gray-500">
+                  COP @47°F
+                </dt>
+                <dd className="text-sm font-semibold text-primary">
+                  {baselineCop47Value}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-daikin-gray-500">
+                  COP @17°F
+                </dt>
+                <dd className="text-sm font-semibold text-primary">
+                  {baselineCop17Value}
+                </dd>
+              </div>
+            </dl>
+          </Card>
+          <Card title="Daikin Inverter" className="h-full">
+            <dl className="space-y-3 text-sm text-daikin-gray-500">
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-daikin-gray-500">
+                  COP @47°F
+                </dt>
+                <dd className="text-sm font-semibold text-primary">
+                  {compareCop47Value}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-daikin-gray-500">
+                  COP @17°F
+                </dt>
+                <dd className="text-sm font-semibold text-primary">
+                  {compareCop17Value}
+                </dd>
+              </div>
+            </dl>
+          </Card>
         </div>
       </section>
 

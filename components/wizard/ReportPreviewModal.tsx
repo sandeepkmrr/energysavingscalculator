@@ -111,6 +111,33 @@ export function ReportPreviewModal({
     },
   ];
 
+  const formatCop = (value?: number) =>
+    typeof value === 'number' && Number.isFinite(value)
+      ? decimalFormatter.format(value)
+      : undefined;
+
+  const baselineCop47Value = (() => {
+    const formatted47 = formatCop(project.systemBaseline.cop47);
+    if (formatted47) {
+      return formatted47;
+    }
+    const fallback17 = formatCop(project.systemBaseline.cop17);
+    return fallback17 ? `— (using COP @17°F = ${fallback17})` : '—';
+  })();
+
+  const baselineCop17Value = formatCop(project.systemBaseline.cop17) ?? '—';
+
+  const compareCop47Value = (() => {
+    const formatted47 = formatCop(project.systemCompare.cop47);
+    if (formatted47) {
+      return formatted47;
+    }
+    const fallback17 = formatCop(project.systemCompare.cop17);
+    return fallback17 ? `— (using COP @17°F = ${fallback17})` : '—';
+  })();
+
+  const compareCop17Value = formatCop(project.systemCompare.cop17) ?? '—';
+
   const assumptions = [
     {
       label: 'Electric Rate',
@@ -123,6 +150,22 @@ export function ReportPreviewModal({
     {
       label: 'Analysis Period',
       value: `${project.analysisPeriodYears} years`,
+    },
+    {
+      label: 'COP @47°F (Baseline)',
+      value: baselineCop47Value,
+    },
+    {
+      label: 'COP @17°F (Baseline)',
+      value: baselineCop17Value,
+    },
+    {
+      label: 'COP @47°F (Daikin INV)',
+      value: compareCop47Value,
+    },
+    {
+      label: 'COP @17°F (Daikin INV)',
+      value: compareCop17Value,
     },
   ];
 
