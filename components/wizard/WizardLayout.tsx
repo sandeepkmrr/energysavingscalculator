@@ -25,14 +25,16 @@ export function WizardLayout({ children, currentStep }: WizardLayoutProps) {
   }, [currentStep, setCurrentStep]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-page">
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto space-y-8">
-          <div className="bg-white p-6 rounded-xl shadow-soft">
+      <main className="flex-1 container mx-auto px-4 py-10">
+        <div className="max-w-5xl mx-auto space-y-6">
+          <div className="bg-white px-8 py-6 rounded-card shadow-card">
             <Stepper steps={WIZARD_STEPS} currentStep={currentStep} />
           </div>
-          <div className="bg-white p-6 rounded-xl shadow-soft">{children}</div>
+          <div className="bg-white px-8 py-8 rounded-card shadow-card">
+            {children}
+          </div>
         </div>
       </main>
       <SustainabilityBanner />

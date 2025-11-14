@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Bolt, Clock, TrendingUp, Leaf } from 'lucide-react';
 
-import { Card } from '@/components/shared/Card';
+import { Card, MetricCard, MetricGrid } from '@/components/shared';
 import { PrimaryButton, SecondaryButton } from '@/components/shared';
 import { ReportPreviewModal } from '@/components/wizard/ReportPreviewModal';
 import { useWizard } from '@/contexts/WizardContext';
@@ -209,16 +209,20 @@ export function ResultsDashboard({ project, results }: ResultsDashboardProps) {
   ];
 
   return (
-    <div className="space-y-6" aria-labelledby="results-summary-heading">
-      <header className="space-y-1">
+    <div className="space-y-8" aria-labelledby="results-summary-heading">
+      <header className="space-y-2">
         <h1
           id="results-summary-heading"
-          className="text-headline text-primary font-semibold"
+          className="text-3xl md:text-4xl font-bold leading-tight"
+          style={{ color: '#246D9E' }}
         >
-          Project Summary — {project.project.name} • {project.location.city},{' '}
-          {project.location.state} (Climate Zone {project.location.climateZone})
+          Project Summary — {project.project.name}
         </h1>
-        <p className="text-sm text-daikin-gray-500">
+        <p className="text-lg text-daikin-gray-500">
+          {project.location.city}, {project.location.state} • Climate Zone{' '}
+          {project.location.climateZone}
+        </p>
+        <p className="text-sm text-daikin-gray-500 leading-relaxed">
           Executive summary of energy, cost, and sustainability impacts for the
           proposed Daikin inverter retrofit.
         </p>
@@ -226,31 +230,17 @@ export function ResultsDashboard({ project, results }: ResultsDashboardProps) {
 
       {/* KPI Grid */}
       <section aria-label="Key performance indicators">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-          {kpis.map((kpi) => {
-            const Icon = kpi.icon;
-            return (
-              <Card key={kpi.title} className="h-full pt-5">
-                <div className="flex h-full flex-col gap-3">
-                  <div className="flex items-start gap-3">
-                    <span className="mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-full bg-daikin-gray-50 text-primary">
-                      <Icon aria-hidden className="h-4 w-4" />
-                    </span>
-                    <p className="flex-1 text-left text-[0.75rem] font-semibold uppercase tracking-[0.12em] text-daikin-gray-500 leading-tight">
-                      {kpi.title}
-                    </p>
-                  </div>
-                  <p className="text-3xl font-semibold leading-none text-primary">
-                    {kpi.value}
-                  </p>
-                  <p className="text-xs leading-relaxed text-daikin-gray-500">
-                    {kpi.note}
-                  </p>
-                </div>
-              </Card>
-            );
-          })}
-        </div>
+        <MetricGrid>
+          {kpis.map((kpi) => (
+            <MetricCard
+              key={kpi.title}
+              title={kpi.title}
+              value={kpi.value}
+              icon={kpi.icon}
+              note={kpi.note}
+            />
+          ))}
+        </MetricGrid>
       </section>
 
       {/* Charts */}
@@ -288,55 +278,60 @@ export function ResultsDashboard({ project, results }: ResultsDashboardProps) {
       </section>
 
       {/* Detailed Table */}
-      <section aria-label="Detailed results table" className="space-y-2">
-        <h2 className="text-lg font-semibold text-primary">Detailed Results</h2>
-        <div className="overflow-x-auto">
+      <section aria-label="Detailed results table" className="space-y-4">
+        <h2 className="text-subheading font-semibold text-brand-deep">
+          Detailed Results
+        </h2>
+        <div className="overflow-x-auto rounded-card border border-daikin-gray-100">
           <table className="min-w-full divide-y divide-daikin-gray-100">
-            <thead className="bg-daikin-gray-50">
+            <thead style={{ backgroundColor: '#F7FAFC' }}>
               <tr>
                 <th
                   scope="col"
-                  className="px-4 py-3 text-left text-sm font-medium text-daikin-gray-500"
+                  className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-daikin-gray-500"
                 >
                   Metric
                 </th>
                 <th
                   scope="col"
-                  className="px-4 py-3 text-right text-sm font-medium text-daikin-gray-500"
+                  className="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-daikin-gray-500"
                 >
                   Baseline
                 </th>
                 <th
                   scope="col"
-                  className="px-4 py-3 text-right text-sm font-medium text-daikin-gray-500"
+                  className="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-daikin-gray-500"
                 >
                   Daikin INV
                 </th>
                 <th
                   scope="col"
-                  className="px-4 py-3 text-right text-sm font-medium text-daikin-gray-500"
+                  className="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-daikin-gray-500"
                 >
                   Δ (Savings)
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-daikin-gray-100">
+            <tbody className="bg-white divide-y divide-daikin-gray-100">
               {detailedRows.map((row) => (
-                <tr key={row.label}>
+                <tr
+                  key={row.label}
+                  className="hover:bg-daikin-gray-50/50 transition-colors"
+                >
                   <th
                     scope="row"
-                    className="px-4 py-3 text-left text-sm font-medium text-primary"
+                    className="px-6 py-4 text-left text-sm font-semibold text-primary"
                   >
                     {row.label}
                   </th>
-                  <td className="px-4 py-3 text-right text-sm text-daikin-gray-500">
+                  <td className="px-6 py-4 text-right text-sm text-daikin-gray-500 font-medium">
                     {row.formatter(row.baseline)}
                   </td>
-                  <td className="px-4 py-3 text-right text-sm text-daikin-gray-500">
+                  <td className="px-6 py-4 text-right text-sm text-daikin-gray-500 font-medium">
                     {row.formatter(row.compare)}
                   </td>
                   <td
-                    className={`px-4 py-3 text-right text-sm ${
+                    className={`px-6 py-4 text-right text-sm font-bold ${
                       row.delta < 0 ? 'text-accent' : 'text-daikin-gray-500'
                     }`}
                   >
@@ -349,8 +344,8 @@ export function ResultsDashboard({ project, results }: ResultsDashboardProps) {
         </div>
       </section>
 
-      <section aria-label="System assumptions" className="space-y-2">
-        <h2 className="text-lg font-semibold text-primary">
+      <section aria-label="System assumptions" className="space-y-4">
+        <h2 className="text-subheading font-semibold text-brand-deep">
           System Assumptions
         </h2>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

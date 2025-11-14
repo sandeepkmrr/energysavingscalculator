@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+/* Import Daikin Design Tokens */
+@import '../styles/design-tokens.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -12,7 +15,7 @@
     --card-foreground: 345 6% 13%;
     --popover: 0 0% 100%;
     --popover-foreground: 345 6% 13%;
-    --primary: 197 100% 45%;
+    --primary: 201 63% 50%;
     --primary-foreground: 0 0% 100%;
     --secondary: 210 40% 96%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -24,25 +27,48 @@
     --destructive-foreground: 0 0% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 197 100% 45%;
+    --ring: 201 63% 50%;
     --radius: 0.75rem;
 
-    /* Daikin brand colors */
-    --daikin-blue: #00a0e4;
-    --daikin-blue-light: #44c8f5;
-    --daikin-raisin: #231f20;
-    --daikin-gray-50: #f8fafc;
-    --daikin-gray-100: #e6eef6;
-    --daikin-gray-500: #6b7280;
-    --daikin-green: #16a34a;
+    /* Daikin brand colors - Reference Design */
+    --brand-deep: #246d9e;
+    --brand: #2e9ad8;
+    --accent-light: #6ec1ff;
+    --cta: #2b9ee0;
+    --bg: #f7fafc;
+    --card-bg: #ffffff;
+    --text-muted: #6b7b8a;
+    --success: #2ca66a;
+    --border-light: #e6eef7;
+    --text-primary: #0f2b3d;
+    --warning: #f26b3a;
+    --placeholder: #9aa6b2;
 
-    /* Spacing scale */
+    /* Legacy support */
+    --daikin-blue: #2e9ad8;
+    --daikin-blue-light: #6ec1ff;
+    --daikin-blue-deep: #246d9e;
+    --daikin-raisin: #231f20;
+    --daikin-gray-50: #f7fafc;
+    --daikin-gray-100: #e6eef7;
+    --daikin-gray-500: #6b7b8a;
+    --daikin-green: #2ca66a;
+
+    /* Spacing scale (8px base) */
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
     --spacing-md: 1rem;
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
     --spacing-2xl: 3rem;
+    --spacing-3xl: 4rem;
+    --spacing-4xl: 6rem;
+
+    /* Border radius tokens */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.625rem;
+    --radius-lg: 0.75rem;
+    --radius-pill: 1.25rem;
   }
 
   * {
@@ -56,16 +82,25 @@
 
   /* Accessibility: Focus states */
   *:focus-visible {
-    @apply outline-none ring-2 ring-primary ring-offset-2;
+    @apply outline-none ring-2 ring-offset-2;
+    ring-color: var(--cta);
   }
 
   /* Ensure 4.5:1 contrast for text */
   .text-primary {
-    color: var(--daikin-blue);
+    color: var(--brand);
+  }
+
+  .text-brand-deep {
+    color: var(--brand-deep);
   }
 
   .text-accent {
-    color: var(--daikin-green);
+    color: var(--success);
+  }
+
+  .bg-page {
+    background-color: var(--bg);
   }
 }
 
@@ -75,15 +110,41 @@
   }
 
   .text-headline-lg {
-    @apply text-[36px] leading-tight font-semibold;
+    @apply text-[40px] leading-tight font-semibold;
+  }
+
+  .text-subheading {
+    @apply text-[22px] leading-snug font-semibold;
   }
 
   .text-body {
-    @apply text-base leading-normal;
+    @apply text-[15px] leading-relaxed;
+  }
+
+  .text-caption {
+    @apply text-[12px] leading-normal;
+  }
+
+  .shadow-card {
+    box-shadow: 0 6px 18px rgba(20, 40, 60, 0.06);
+  }
+
+  .shadow-soft {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 
   .printable {
     @apply bg-white text-black;
+  }
+
+  /* Hide scrollbar for mobile stepper scroll */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
 

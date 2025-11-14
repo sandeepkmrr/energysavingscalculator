@@ -43,18 +43,18 @@ const STACK_COLORS: Record<
   { stroke: string; fill: string; label: string }
 > = {
   energy: {
-    stroke: '#007AC2',
-    fill: 'rgba(0, 122, 194, 0.25)',
+    stroke: 'var(--chart-baseline, #2E9AD8)',
+    fill: 'rgba(46, 154, 216, 0.2)',
     label: 'Energy',
   },
   maintenance: {
-    stroke: '#60A5FA',
-    fill: 'rgba(96, 165, 250, 0.35)',
+    stroke: 'var(--chart-accent1, #6EC1FF)',
+    fill: 'rgba(110, 193, 255, 0.25)',
     label: 'Maintenance',
   },
   capex: {
-    stroke: '#93C5FD',
-    fill: 'rgba(147, 197, 253, 0.45)',
+    stroke: 'var(--chart-daikin, #2CA66A)',
+    fill: 'rgba(44, 166, 106, 0.15)',
     label: 'CapEx',
   },
 };
@@ -78,20 +78,22 @@ const LifecycleTooltip = ({
   const total = dataPoint.energy + dataPoint.maintenance + dataPoint.capex;
 
   return (
-    <div className="rounded-md border border-daikin-gray-200 bg-white px-3 py-2 text-sm text-daikin-gray-700 shadow-lg">
-      <p className="text-xs font-semibold text-primary">
+    <div className="rounded-md border border-daikin-gray-100 bg-white px-4 py-3 text-sm shadow-card">
+      <p className="text-xs font-semibold text-primary mb-2">
         Year {label} — Total {formatValueWithUnit(total, unit)}
       </p>
-      <dl className="mt-2 space-y-1 text-xs">
+      <dl className="space-y-2 text-xs">
         {STACK_ORDER.map((key) => (
           <div key={key} className="flex items-center gap-2">
             <span
-              className="h-2 w-2 shrink-0 rounded-full"
+              className="h-2.5 w-2.5 shrink-0 rounded-full"
               style={{ backgroundColor: STACK_COLORS[key].stroke }}
               aria-hidden="true"
             />
-            <dt className="text-daikin-gray-500">{STACK_COLORS[key].label}:</dt>
-            <dd className="font-medium text-daikin-gray-700">
+            <dt className="text-daikin-gray-500 min-w-[80px]">
+              {STACK_COLORS[key].label}:
+            </dt>
+            <dd className="font-semibold text-daikin-gray-500">
               {formatValueWithUnit(dataPoint[key], unit)}
             </dd>
           </div>
@@ -122,18 +124,22 @@ function LifecyclePanel({ data, label, unit, chartId }: PanelProps) {
             data={data}
             margin={{ top: 10, right: 16, left: 0, bottom: 0 }}
           >
-            <CartesianGrid stroke="#E5E7EB" strokeDasharray="4 4" />
+            <CartesianGrid
+              stroke="var(--chart-grid, #E6EEF7)"
+              strokeDasharray="3 3"
+              strokeOpacity={0.5}
+            />
             <XAxis
               dataKey="year"
               tickLine={false}
-              axisLine={{ stroke: '#E5E7EB' }}
-              tick={{ fill: '#6B7280', fontSize: 12 }}
+              axisLine={{ stroke: 'var(--chart-grid, #E6EEF7)' }}
+              tick={{ fill: 'var(--chart-axis, #6B7B8A)', fontSize: 12 }}
             />
             <YAxis
               tickFormatter={(value) => formatCompactValue(value)}
               tickLine={false}
-              axisLine={{ stroke: '#E5E7EB' }}
-              tick={{ fill: '#6B7280', fontSize: 12 }}
+              axisLine={{ stroke: 'var(--chart-grid, #E6EEF7)' }}
+              tick={{ fill: 'var(--chart-axis, #6B7B8A)', fontSize: 12 }}
             />
             <Tooltip
               content={<LifecycleTooltip unit={unit} />}

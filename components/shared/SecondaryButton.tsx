@@ -11,7 +11,15 @@ export function SecondaryButton({
   ...props
 }: SecondaryButtonProps) {
   return (
-    <Button variant="outline" className={cn('border-2', className)} {...props}>
+    <Button
+      variant="outline"
+      className={cn(
+        'border-2 border-cta text-cta bg-white hover:bg-cta/5 rounded-pill',
+        'px-6 py-2.5 font-medium transition-all',
+        className
+      )}
+      {...props}
+    >
       {children}
     </Button>
   );

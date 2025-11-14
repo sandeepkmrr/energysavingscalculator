@@ -328,9 +328,12 @@ export function SystemSetup({
 
   return (
     <div className="space-y-6">
-      <h2 className="text-headline text-primary font-semibold">
+      <h2 className="text-headline text-brand-deep font-semibold mb-2">
         System Configuration
       </h2>
+      <p className="text-sm text-daikin-gray-500 mb-6">
+        Configure your baseline and comparison HVAC systems for analysis.
+      </p>
 
       {/* System Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

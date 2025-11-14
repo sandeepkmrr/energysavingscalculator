@@ -1,0 +1,43 @@
+Feature,Type,File(s),Contracts,Importance,Notes
+Landing Page,Page,app/page.tsx; components/pages/LandingPage.tsx,None,Optional,Entry point - can be completely redesigned
+Project Info Page,Page,app/wizard/project/page.tsx; components/wizard/ProjectInfo.tsx,"WizardFormData props: projectName, zip, city, state, climateZone, buildingType, hoursPerYear, electricRate, gasRate, maintenanceCostPerYear",Critical,"Form validation, ZIP lookup, chip presets must work"
+System Setup Page,Page,app/wizard/system/page.tsx; components/wizard/SystemSetup.tsx,"WizardFormData props: baselineSystem, compareSystem, rebate",Critical,"Collapsible sections, capacity sync, calculation trigger"
+Results Page,Page,app/wizard/results/page.tsx; components/wizard/ResultsDashboard.tsx,"Props: project: Project, results: Project['results']",Critical,"KPI cards, charts, table, modal - all must display correctly"
+Wizard Layout,Layout,components/wizard/WizardLayout.tsx,"Props: children: ReactNode, currentStep: number",Critical,Contains stepper and page structure
+Wizard Context,State,contexts/WizardContext.tsx,"API: formData, updateFormData(), currentStep, setCurrentStep(), results, setResults(), resetWizard()",Critical,Global state management - DO NOT break
+ZIP Lookup,API,lib/mockData.ts,"Function: lookupZip(zip: string) => {city, state, climateZone} | null",Critical,Called on ZIP blur - must return same structure
+Calculate Savings,API,lib/mockData.ts,"Function: calculateSavings(projectData: Partial<Project>) => Promise<Project['results']>",Critical,Async calculation - preserves 2s delay and return structure
+Project Data Model,Type,lib/mockData.ts,Project interface with nested objects,Critical,Data contract for entire app
+Stepper,Component,components/shared/Stepper.tsx,"Props: steps: string[], currentStep: number",Critical,Visual redesign OK but must show current step correctly
+Form Field,Component,components/shared/FormField.tsx,"Props: label, htmlFor, required?, error?, description?, helperText?, helperTone?",Critical,Error states and accessibility labels must work
+Number Input,Component,components/shared/NumberInput.tsx,"Props: value, onChange, min?, max?, step?, placeholder?",Critical,Validation and numeric constraints
+Select,Component,components/shared/Select.tsx,"Props: value, onValueChange, options: Array<{value, label}>, placeholder?",Critical,Uses Radix UI - dropdown must work
+Input,Component,components/ui/input.tsx,"Props: value, onChange, readOnly?, disabled?, className?",Critical,Basic input - read-only styling important
+Primary Button,Component,components/shared/PrimaryButton.tsx,"Props: children, onClick?, disabled?, type?",Critical,Disabled state must be visually distinct
+Secondary Button,Component,components/shared/SecondaryButton.tsx,"Props: children, onClick?, disabled?, type?",Critical,Contrast with primary button
+Card,Component,components/shared/Card.tsx,"Props: title?, description?, children, className?",Critical,Container component - restyling safe
+Header,Component,components/shared/Header.tsx,None,Optional,App header - can be redesigned
+Footer,Component,components/shared/CorporateFooter.tsx,None,Optional,Static footer - can be redesigned
+Sustainability Banner,Component,components/shared/SustainabilityBanner.tsx,None,Optional,Static banner - can be redesigned
+Info Tooltip,Component,components/shared/InfoTooltip.tsx,"Props: id: string, content: string, aria-label?",Critical,Accessibility - must remain functional
+Energy Line Chart,Component,components/charts/EnergyLineChart.tsx,"Props: data: Array<{year, baseline, inv}>, metricLabel: string, unit: string, className?",Critical,"Chart colors, gridlines, tooltips - visual only, preserve toggle functionality"
+Lifecycle Area Chart,Component,components/charts/LifecycleAreaChart.tsx,"Props: baselineData, invData (both: Array<{year, energy, maintenance, capex}>), unit: string, className?",Critical,"Stacked areas, tooltips - visual only"
+Chart Utils,Utility,components/charts/chartUtils.ts,"Functions: calculateDelta(), formatCompactValue(), formatValueWithUnit(), formatPercentage()",Critical,Number formatting - DO NOT change function signatures
+Report Modal,Component,components/wizard/ReportPreviewModal.tsx,"Props: open: boolean, onOpenChange, project: Project, results: Project['results']",Optional,PDF preview modal - can be restyled
+Checkbox,Component,components/ui/checkbox.tsx,"Props: checked, onCheckedChange",Critical,Uses Radix UI - preserve functionality
+Dialog,Component,components/ui/dialog.tsx,Radix UI Dialog primitives,Optional,Modal wrapper - can be restyled
+Button (ui),Component,components/ui/button.tsx,Base button with variants,Critical,Used by Primary/Secondary buttons
+Label,Component,components/ui/label.tsx,Form label wrapper,Critical,Accessibility - must associate with inputs
+MOCK_PROJECT,Data,lib/mockData.ts,Complete mock project object with results and series data,Critical,Test data - used as fallback values
+Energy Escalation,Constant,lib/mockData.ts,ENERGY_ESCALATION_RATE = 0.02,Critical,2% annual energy cost increase
+Cost Escalation,Constant,lib/mockData.ts,COST_ESCALATION_RATE = 0.02,Critical,2% annual cost increase
+Analysis Period,Constant,lib/mockData.ts,ANALYSIS_PERIOD_YEARS = 15,Critical,15-year analysis window
+Building Types,Constant,components/wizard/ProjectInfo.tsx,"Array: School, Retail, Hotel, Restaurant, Healthcare, Government, Office, Other",Critical,Dropdown options - must remain available
+Hour Presets,Constant,components/wizard/ProjectInfo.tsx,"Array: 3500, 4000, 5000",Critical,Chip button values
+System Types,Constant,components/wizard/SystemSetup.tsx,"Array: BE HP, BE AC, HE HP, HE AC, BE GE, HE GE",Critical,Dropdown options
+Capacity Options,Constant,components/wizard/SystemSetup.tsx,"Array: 3, 5, 7.5, 10, 12.5, 15, 20, 25 (tons)",Critical,Dropdown options
+CountUp Hook,Hook,components/wizard/ResultsDashboard.tsx,"useCountUp(target: number, duration?: number) => animated value",Critical,Number animation - preserve animation logic
+Theme Hook,Hook,hooks/useTheme.tsx,Theme detection/toggle,Optional,Dark mode support (if implemented)
+Tailwind Config,Config,tailwind.config.ts,"Custom colors: primary, accent, daikin.*, custom radius values, font sizes",Critical,Will be updated with new design tokens
+Global CSS,Styles,app/globals.css,Global styles and CSS variables,Critical,Will be updated with design tokens
+Utils,Utility,lib/utils.ts,"cn() function for class merging",Critical,DO NOT change - used throughout app

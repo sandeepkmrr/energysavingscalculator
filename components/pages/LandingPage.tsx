@@ -1,20 +1,12 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import { Header } from '@/components/shared/Header';
+import { useRef } from 'react';
+import { Header, HeroIntro } from '@/components/shared';
 import { SustainabilityBanner, CorporateFooter } from '@/components/shared';
-import { PrimaryButton, SecondaryButton } from '@/components/shared';
 import { Zap, TrendingUp, Leaf } from 'lucide-react';
 
 export default function LandingPage() {
-  const [isVisible, setIsVisible] = useState(false);
-  const heroRef = useRef<HTMLDivElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
 
   const scrollToInfo = () => {
     infoRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -46,71 +38,29 @@ export default function LandingPage() {
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
-        <section
-          ref={heroRef}
-          className="relative w-full py-16 md:py-24 lg:py-32 overflow-hidden"
-          aria-label="Hero section"
-        >
-          <div
-            className="absolute inset-0 bg-gradient-to-br from-[#00A0E4] via-[#44C8F5] to-[#0074B4]"
-            aria-hidden="true"
-          />
-          <div className="container mx-auto px-4 relative z-10">
-            <div
-              className={`max-w-3xl mx-auto text-center transition-opacity duration-1000 ${
-                isVisible ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              <h1 className="text-headline-lg md:text-5xl lg:text-6xl font-bold text-white mb-6">
-                Compare Energy & Lifecycle Costs with Daikin Inverter RTUs
-              </h1>
-              <p className="text-body md:text-lg text-white/90 mb-8 max-w-2xl mx-auto">
-                Quantify energy savings, payback and total cost of
-                ownership—instantly.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <PrimaryButton
-                  size="lg"
-                  className="w-full sm:w-auto min-w-[200px]"
-                  asChild
-                  aria-label="Start Your Analysis - Navigate to wizard"
-                >
-                  <Link href="/wizard">Start Your Analysis</Link>
-                </PrimaryButton>
-                <SecondaryButton
-                  size="lg"
-                  onClick={scrollToInfo}
-                  className="w-full sm:w-auto min-w-[200px] bg-white/10 border-white/30 text-white hover:bg-white/20 hover:text-white"
-                  aria-label="Learn More - Scroll to information section"
-                >
-                  Learn More
-                </SecondaryButton>
-              </div>
-            </div>
-          </div>
-        </section>
+        <HeroIntro onLearnMore={scrollToInfo} />
 
         {/* Benefits Section */}
         <section
           ref={infoRef}
-          className="py-16 md:py-24 bg-white"
+          className="py-20 md:py-28 bg-white"
           aria-label="Benefits section"
         >
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-16">
               {benefits.map((benefit, index) => {
                 const Icon = benefit.icon;
                 return (
                   <div
                     key={benefit.title}
-                    className="text-center space-y-4"
+                    className="text-center space-y-5"
                     role="article"
                     aria-labelledby={`benefit-${index}-title`}
                   >
                     <div className="flex justify-center">
-                      <div className="p-4 rounded-full bg-daikin-gray-50 text-primary">
+                      <div className="p-5 rounded-full bg-gradient-to-br from-daikin-gray-50 to-white border-2 border-daikin-gray-100 text-primary shadow-sm">
                         <Icon
-                          className="w-8 h-8"
+                          className="w-10 h-10"
                           aria-hidden="true"
                           strokeWidth={2}
                         />
@@ -118,11 +68,11 @@ export default function LandingPage() {
                     </div>
                     <h2
                       id={`benefit-${index}-title`}
-                      className="text-headline text-primary font-semibold"
+                      className="text-subheading text-primary font-semibold"
                     >
                       {benefit.title}
                     </h2>
-                    <p className="text-body text-daikin-gray-500 max-w-sm mx-auto">
+                    <p className="text-body text-daikin-gray-500 max-w-sm mx-auto leading-relaxed">
                       {benefit.description}
                     </p>
                   </div>

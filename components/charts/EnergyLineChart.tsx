@@ -39,12 +39,12 @@ const SERIES_DEFINITIONS: Record<
 > = {
   baseline: {
     label: 'Baseline',
-    color: '#007AC2',
+    color: 'var(--chart-baseline, #2E9AD8)',
     dataKey: 'baseline',
   },
   inv: {
     label: 'Daikin INV',
-    color: '#16A34A',
+    color: 'var(--chart-daikin, #2CA66A)',
     dataKey: 'inv',
   },
 };
@@ -84,42 +84,43 @@ const EnergyTooltip = ({
 
   return (
     <div
-      className="rounded-md border border-daikin-gray-200 bg-white px-3 py-2 text-sm text-daikin-gray-700 shadow-lg"
+      className="rounded-md border border-daikin-gray-100 bg-white px-4 py-3 text-sm shadow-card"
       role="status"
     >
-      <p className="text-xs font-semibold text-primary">
+      <p className="text-xs font-semibold text-primary mb-2">
         Year {label} — {formatValueWithUnit(invValue, unit)}
       </p>
-      <div className="mt-2 space-y-1">
+      <div className="space-y-2">
         <div className="flex items-center gap-2">
           <span
-            className="h-2 w-2 rounded-full"
+            className="h-2.5 w-2.5 rounded-full"
             style={{ backgroundColor: SERIES_DEFINITIONS.baseline.color }}
             aria-hidden="true"
           />
-          <span className="text-xs text-daikin-gray-500">
+          <span className="text-xs text-daikin-gray-500 min-w-[70px]">
             {SERIES_DEFINITIONS.baseline.label}:
           </span>
-          <span className="font-medium text-daikin-gray-700">
+          <span className="font-semibold text-daikin-gray-500 text-xs">
             {formatValueWithUnit(baselineValue, unit)}
           </span>
         </div>
         <div className="flex items-center gap-2">
           <span
-            className="h-2 w-2 rounded-full"
+            className="h-2.5 w-2.5 rounded-full"
             style={{ backgroundColor: SERIES_DEFINITIONS.inv.color }}
             aria-hidden="true"
           />
-          <span className="text-xs text-daikin-gray-500">
+          <span className="text-xs text-daikin-gray-500 min-w-[70px]">
             {SERIES_DEFINITIONS.inv.label}:
           </span>
-          <span className="font-medium text-daikin-gray-700">
+          <span className="font-semibold text-daikin-gray-500 text-xs">
             {formatValueWithUnit(invValue, unit)}
           </span>
         </div>
       </div>
-      <p className="mt-2 text-xs text-daikin-gray-500">
-        Δ {formatValueWithUnit(delta, unit)} ({formatPercentage(deltaPct)})
+      <p className="mt-3 pt-2 border-t border-daikin-gray-100 text-xs text-accent font-semibold">
+        Savings: {formatValueWithUnit(delta, unit)} (
+        {formatPercentage(deltaPct)})
       </p>
     </div>
   );
@@ -196,18 +197,22 @@ export function EnergyLineChart({
             data={data}
             margin={{ top: 10, right: 24, left: 0, bottom: 10 }}
           >
-            <CartesianGrid stroke="#E5E7EB" strokeDasharray="4 4" />
+            <CartesianGrid
+              stroke="var(--chart-grid, #E6EEF7)"
+              strokeDasharray="3 3"
+              strokeOpacity={0.5}
+            />
             <XAxis
               dataKey="year"
               tickLine={false}
-              axisLine={{ stroke: '#E5E7EB' }}
-              tick={{ fill: '#6B7280', fontSize: 12 }}
+              axisLine={{ stroke: 'var(--chart-grid, #E6EEF7)' }}
+              tick={{ fill: 'var(--chart-axis, #6B7B8A)', fontSize: 12 }}
             />
             <YAxis
               tickFormatter={(value) => formatCompactValue(value)}
               tickLine={false}
-              axisLine={{ stroke: '#E5E7EB' }}
-              tick={{ fill: '#6B7280', fontSize: 12 }}
+              axisLine={{ stroke: 'var(--chart-grid, #E6EEF7)' }}
+              tick={{ fill: 'var(--chart-axis, #6B7B8A)', fontSize: 12 }}
             />
             <Tooltip
               content={<EnergyTooltip unit={unit} />}

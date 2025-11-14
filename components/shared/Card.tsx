@@ -24,14 +24,22 @@ export function Card({
   ...props
 }: CardProps) {
   return (
-    <BaseCard className={cn('shadow-soft', className)} {...props}>
+    <BaseCard className={cn('shadow-card rounded-card', className)} {...props}>
       {(title || description) && (
-        <CardHeader>
-          {title && <CardTitle>{title}</CardTitle>}
-          {description && <CardDescription>{description}</CardDescription>}
+        <CardHeader className="pb-4">
+          {title && (
+            <CardTitle className="text-primary text-lg font-semibold">
+              {title}
+            </CardTitle>
+          )}
+          {description && (
+            <CardDescription className="text-daikin-gray-500 text-sm">
+              {description}
+            </CardDescription>
+          )}
         </CardHeader>
       )}
-      <CardContent>{children}</CardContent>
+      <CardContent className="pt-0">{children}</CardContent>
       {footer && <CardFooter>{footer}</CardFooter>}
     </BaseCard>
   );

@@ -167,14 +167,62 @@ export interface ZipLookupResult {
 export function lookupZip(zip: string): ZipLookupResult | null {
   // Mock ZIP code database - in production, this would call an API
   const zipDatabase: Record<string, ZipLookupResult> = {
+    // Texas
     '75001': { city: 'Plano', state: 'TX', climateZone: '3A' },
-    '10001': { city: 'New York', state: 'NY', climateZone: '4A' },
-    '90210': { city: 'Beverly Hills', state: 'CA', climateZone: '3B' },
-    '60601': { city: 'Chicago', state: 'IL', climateZone: '5A' },
-    '33101': { city: 'Miami', state: 'FL', climateZone: '1A' },
-    '98101': { city: 'Seattle', state: 'WA', climateZone: '4C' },
-    '80202': { city: 'Denver', state: 'CO', climateZone: '5B' },
     '77001': { city: 'Houston', state: 'TX', climateZone: '2A' },
+    '78701': { city: 'Austin', state: 'TX', climateZone: '2A' },
+    '75201': { city: 'Dallas', state: 'TX', climateZone: '3A' },
+
+    // California
+    '90210': { city: 'Beverly Hills', state: 'CA', climateZone: '3B' },
+    '94102': { city: 'San Francisco', state: 'CA', climateZone: '3C' },
+    '92101': { city: 'San Diego', state: 'CA', climateZone: '3B' },
+    '95814': { city: 'Sacramento', state: 'CA', climateZone: '3B' },
+
+    // New York
+    '10001': { city: 'New York', state: 'NY', climateZone: '4A' },
+    '14201': { city: 'Buffalo', state: 'NY', climateZone: '5A' },
+
+    // Illinois
+    '60601': { city: 'Chicago', state: 'IL', climateZone: '5A' },
+
+    // Florida
+    '33101': { city: 'Miami', state: 'FL', climateZone: '1A' },
+    '32801': { city: 'Orlando', state: 'FL', climateZone: '2A' },
+    '33602': { city: 'Tampa', state: 'FL', climateZone: '2A' },
+
+    // Washington
+    '98101': { city: 'Seattle', state: 'WA', climateZone: '4C' },
+
+    // Colorado
+    '80202': { city: 'Denver', state: 'CO', climateZone: '5B' },
+
+    // Arizona
+    '85001': { city: 'Phoenix', state: 'AZ', climateZone: '2B' },
+
+    // Georgia
+    '30303': { city: 'Atlanta', state: 'GA', climateZone: '3A' },
+
+    // Massachusetts
+    '02101': { city: 'Boston', state: 'MA', climateZone: '5A' },
+
+    // Pennsylvania
+    '19019': { city: 'Philadelphia', state: 'PA', climateZone: '4A' },
+
+    // Michigan
+    '48201': { city: 'Detroit', state: 'MI', climateZone: '5A' },
+
+    // Nevada
+    '89101': { city: 'Las Vegas', state: 'NV', climateZone: '3B' },
+
+    // Oregon
+    '97201': { city: 'Portland', state: 'OR', climateZone: '4C' },
+
+    // North Carolina
+    '28202': { city: 'Charlotte', state: 'NC', climateZone: '3A' },
+
+    // Minnesota
+    '55401': { city: 'Minneapolis', state: 'MN', climateZone: '6A' },
   };
 
   const normalizedZip = zip.trim();

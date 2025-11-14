@@ -1,14 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useWizard } from '@/contexts/WizardContext';
-import { FormField } from '@/components/shared/FormField';
+import { FormField, ChipGroup } from '@/components/shared';
 import { Input } from '@/components/ui/input';
 import { Select } from '@/components/shared/Select';
 import { NumberInput } from '@/components/shared/NumberInput';
 import { PrimaryButton } from '@/components/shared/PrimaryButton';
 import { lookupZip } from '@/lib/mockData';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const BUILDING_TYPES = [
   { value: 'School', label: 'School' },
@@ -22,16 +22,27 @@ const BUILDING_TYPES = [
 ];
 
 const HOURS_PRESETS = [
-  { label: 'Typical: 3500', value: 3500 },
-  { label: 'Typical: 4000', value: 4000 },
-  { label: 'Typical: 5000', value: 5000 },
+  { label: '3,500 hrs', value: 3500 },
+  { label: '4,000 hrs', value: 4000 },
+  { label: '5,000 hrs', value: 5000 },
 ];
 
 export function ProjectInfo() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { formData, updateFormData } = useWizard();
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isZipLookupLoading, setIsZipLookupLoading] = useState(false);
+
+  // Handle ZIP code from URL parameter (from landing page)
+  useEffect(() => {
+    const zipFromUrl = searchParams.get('zip');
+    if (zipFromUrl && !formData.zip) {
+      updateFormData({ zip: zipFromUrl });
+      handleZipBlur(zipFromUrl);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   const handleZipBlur = async (zip: string) => {
     if (!zip.trim()) {
@@ -143,7 +154,7 @@ export function ProjectInfo() {
       }}
       className="space-y-6"
     >
-      <h2 className="text-headline text-primary font-semibold mb-6">
+      <h2 className="text-headline text-brand-deep font-semibold mb-6">
         Project Information
       </h2>
 
@@ -251,19 +262,11 @@ export function ProjectInfo() {
               step={100}
               placeholder="3500"
             />
-            <div className="flex flex-wrap gap-2">
-              {HOURS_PRESETS.map((preset) => (
-                <button
-                  key={preset.value}
-                  type="button"
-                  onClick={() => handlePresetClick(preset.value)}
-                  className="px-3 py-1.5 text-sm border border-daikin-gray-100 rounded-md hover:bg-daikin-gray-50 hover:border-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                  aria-label={`Set hours to ${preset.value}`}
-                >
-                  {preset.label}
-                </button>
-              ))}
-            </div>
+            <ChipGroup
+              chips={HOURS_PRESETS}
+              selectedValue={formData.hoursPerYear || undefined}
+              onChange={(value) => handleFieldChange('hoursPerYear', value)}
+            />
           </div>
         </FormField>
 

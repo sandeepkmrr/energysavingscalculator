@@ -1,0 +1,199 @@
+{
+  "colors": {
+    "brand": {
+      "primary": "#2E9AD8",
+      "deep": "#1B4F72",
+      "light": "#6EC1FF"
+    },
+    "accent": {
+      "green": "#2CA66A",
+      "orange": "#E67E50"
+    },
+    "background": {
+      "page": "#F7FAFC",
+      "surface": "#FFFFFF",
+      "secondary": "#E6EEF7"
+    },
+    "text": {
+      "primary": "#231F20",
+      "secondary": "#6B7B8A",
+      "muted": "#9CA3AF",
+      "onDark": "#FFFFFF"
+    },
+    "border": {
+      "light": "#E6EEF7",
+      "default": "#D1D5DB",
+      "focus": "#2E9AD8"
+    },
+    "gray": {
+      "50": "#F7FAFC",
+      "100": "#E6EEF7",
+      "200": "#D1D9E6",
+      "300": "#B0B8C5",
+      "400": "#8A93A1",
+      "500": "#6B7B8A",
+      "600": "#4A5568",
+      "700": "#2D3748",
+      "800": "#1A202C",
+      "900": "#231F20"
+    },
+    "interactive": {
+      "cta": "#2B9EE0",
+      "ctaHover": "#246D9E",
+      "ctaActive": "#1B5A7D",
+      "secondary": "#E6EEF7",
+      "secondaryHover": "#D1D9E6"
+    },
+    "state": {
+      "success": "#2CA66A",
+      "warning": "#E67E50",
+      "error": "#DC2626",
+      "info": "#2E9AD8"
+    },
+    "chart": {
+      "baseline": "#2E9AD8",
+      "daikin": "#2CA66A",
+      "accent1": "#6EC1FF",
+      "accent2": "#E67E50",
+      "grid": "#E6EEF7",
+      "axis": "#6B7B8A"
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "primary": "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
+      "mono": "'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace"
+    },
+    "fontSize": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "0.9375rem",
+      "md": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.375rem",
+      "2xl": "1.75rem",
+      "3xl": "2rem",
+      "4xl": "2.5rem"
+    },
+    "fontWeight": {
+      "normal": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    },
+    "lineHeight": {
+      "tight": 1.2,
+      "normal": 1.45,
+      "relaxed": 1.6
+    }
+  },
+  "spacing": {
+    "0": "0",
+    "1": "0.25rem",
+    "2": "0.5rem",
+    "3": "0.75rem",
+    "4": "1rem",
+    "5": "1.25rem",
+    "6": "1.5rem",
+    "8": "2rem",
+    "10": "2.5rem",
+    "12": "3rem",
+    "16": "4rem",
+    "20": "5rem"
+  },
+  "borderRadius": {
+    "sm": "0.375rem",
+    "md": "0.5rem",
+    "lg": "0.625rem",
+    "xl": "0.75rem",
+    "2xl": "1rem",
+    "pill": "1.5rem",
+    "circle": "50%",
+    "card": "0.625rem"
+  },
+  "shadows": {
+    "sm": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+    "md": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+    "lg": "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+    "card": "0 6px 18px rgba(20, 40, 60, 0.06)",
+    "soft": "0 2px 8px rgba(0, 0, 0, 0.08)"
+  },
+  "transitions": {
+    "fast": "150ms ease",
+    "base": "200ms ease",
+    "slow": "300ms ease"
+  },
+  "zIndex": {
+    "base": 0,
+    "dropdown": 10,
+    "sticky": 20,
+    "fixed": 30,
+    "modalBackdrop": 40,
+    "modal": 50,
+    "popover": 60,
+    "tooltip": 70
+  },
+  "components": {
+    "header": {
+      "height": "3.5rem",
+      "thinHeight": "2.25rem",
+      "background": "#FFFFFF",
+      "border": "#E6EEF7"
+    },
+    "hero": {
+      "background": "#1B4F72",
+      "text": "#FFFFFF",
+      "paddingY": "4rem"
+    },
+    "stepper": {
+      "circleSize": "2.5rem",
+      "lineWidth": "2px",
+      "activeColor": "#2E9AD8",
+      "completeColor": "#2E9AD8",
+      "inactiveColor": "#B0B8C5"
+    },
+    "input": {
+      "height": "2.75rem",
+      "paddingX": "0.75rem",
+      "borderWidth": "1px",
+      "borderColor": "#E6EEF7",
+      "borderFocus": "#2E9AD8",
+      "background": "#FFFFFF",
+      "backgroundDisabled": "#F7FAFC"
+    },
+    "button": {
+      "height": "2.75rem",
+      "paddingX": "1.5rem",
+      "borderRadius": "1.5rem",
+      "primary": {
+        "background": "#2B9EE0",
+        "hover": "#246D9E",
+        "text": "#FFFFFF"
+      },
+      "secondary": {
+        "background": "#E6EEF7",
+        "hover": "#D1D9E6",
+        "text": "#231F20"
+      }
+    },
+    "card": {
+      "background": "#FFFFFF",
+      "border": "#E6EEF7",
+      "borderWidth": "1px",
+      "borderRadius": "0.625rem",
+      "padding": "1.5rem",
+      "shadow": "0 6px 18px rgba(20, 40, 60, 0.06)"
+    },
+    "table": {
+      "headerBackground": "#F7FAFC",
+      "border": "#E6EEF7",
+      "rowHover": "rgba(230, 238, 247, 0.5)"
+    }
+  },
+  "notes": {
+    "source": "Daikin Energy Calculator (https://daikincomfort.com/EnergyCalculator)",
+    "fonts": "Using system font stack as open-source alternative to proprietary fonts",
+    "accessibility": "All colors meet WCAG 2.1 AA contrast ratios for text and interactive elements",
+    "grid": "8px base unit for consistent spacing throughout the application"
+  }
+}

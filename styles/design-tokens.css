@@ -1,0 +1,263 @@
+/**
+ * Daikin Energy Calculator Design Tokens
+ * Extracted from: https://daikincomfort.com/EnergyCalculator
+ * 
+ * These CSS custom properties define the visual design system
+ * for the Daikin-branded energy calculator application.
+ */
+
+:root {
+  /* ===== Brand Colors ===== */
+
+  /* Primary Blue - Main brand color, links, interactive elements */
+  --daikin-brand-blue: #2e9ad8;
+  --brand: #2e9ad8;
+
+  /* Deep Blue/Navy - Headers, hero sections, emphasis text */
+  --daikin-deep-blue: #1b4f72;
+  --brand-deep: #1b4f72;
+  --hero: #1b4f72;
+
+  /* Light Blue - Hover states, accents */
+  --daikin-light-blue: #6ec1ff;
+  --brand-light: #6ec1ff;
+
+  /* Accent Green - Success, savings, positive metrics */
+  --daikin-green: #2ca66a;
+  --accent: #2ca66a;
+  --success: #2ca66a;
+
+  /* Accent Orange/Coral - Call-to-action highlights, important notices */
+  --daikin-orange: #e67e50;
+  --cta-highlight: #e67e50;
+
+  /* ===== Neutral Colors ===== */
+
+  /* Background and Surface Colors */
+  --bg: #ffffff;
+  --bg-page: #f7fafc;
+  --surface: #ffffff;
+  --surface-secondary: #e6eef7;
+
+  /* Text Colors */
+  --text-primary: #231f20;
+  --text-secondary: #6b7b8a;
+  --text-muted: #9ca3af;
+  --text-on-dark: #ffffff;
+
+  /* Border Colors */
+  --border-light: #e6eef7;
+  --border-default: #d1d5db;
+  --border-focus: #2e9ad8;
+
+  /* Gray Scale */
+  --daikin-gray-50: #f7fafc;
+  --daikin-gray-100: #e6eef7;
+  --daikin-gray-200: #d1d9e6;
+  --daikin-gray-300: #b0b8c5;
+  --daikin-gray-400: #8a93a1;
+  --daikin-gray-500: #6b7b8a;
+  --daikin-gray-600: #4a5568;
+  --daikin-gray-700: #2d3748;
+  --daikin-gray-800: #1a202c;
+  --daikin-gray-900: #231f20;
+
+  /* ===== Interactive States ===== */
+
+  /* CTA / Primary Action */
+  --cta: #2b9ee0;
+  --cta-hover: #246d9e;
+  --cta-active: #1b5a7d;
+
+  /* Secondary Actions */
+  --secondary: #e6eef7;
+  --secondary-hover: #d1d9e6;
+
+  /* Focus Ring */
+  --focus-ring: #2e9ad8;
+  --focus-ring-offset: #ffffff;
+
+  /* Disabled State */
+  --disabled-bg: #f7fafc;
+  --disabled-text: #b0b8c5;
+  --disabled-border: #e6eef7;
+
+  /* ===== Typography ===== */
+
+  /* Font Families */
+  --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  --font-display: var(--font-primary);
+  --font-body: var(--font-primary);
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas,
+    'Courier New', monospace;
+
+  /* Font Sizes */
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 0.9375rem; /* 15px */
+  --font-size-md: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.375rem; /* 22px */
+  --font-size-2xl: 1.75rem; /* 28px */
+  --font-size-3xl: 2rem; /* 32px */
+  --font-size-4xl: 2.5rem; /* 40px */
+
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line Heights */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.45;
+  --line-height-relaxed: 1.6;
+
+  /* ===== Spacing ===== */
+
+  /* Base unit: 8px */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem; /* 4px */
+  --spacing-2: 0.5rem; /* 8px */
+  --spacing-3: 0.75rem; /* 12px */
+  --spacing-4: 1rem; /* 16px */
+  --spacing-5: 1.25rem; /* 20px */
+  --spacing-6: 1.5rem; /* 24px */
+  --spacing-8: 2rem; /* 32px */
+  --spacing-10: 2.5rem; /* 40px */
+  --spacing-12: 3rem; /* 48px */
+  --spacing-16: 4rem; /* 64px */
+  --spacing-20: 5rem; /* 80px */
+
+  /* Container Widths */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1400px;
+
+  /* ===== Border Radius ===== */
+
+  --radius-sm: 0.375rem; /* 6px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 0.625rem; /* 10px */
+  --radius-xl: 0.75rem; /* 12px */
+  --radius-2xl: 1rem; /* 16px */
+  --radius-pill: 1.5rem; /* 24px - for pill buttons */
+  --radius-circle: 50%;
+  --radius-card: 0.625rem; /* 10px - for cards */
+
+  /* ===== Shadows ===== */
+
+  /* Card Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-card: 0 6px 18px rgba(20, 40, 60, 0.06);
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  /* Elevation Shadows */
+  --elevation-1: 0 2px 4px rgba(20, 40, 60, 0.04);
+  --elevation-2: 0 4px 8px rgba(20, 40, 60, 0.06);
+  --elevation-3: 0 8px 16px rgba(20, 40, 60, 0.08);
+
+  /* ===== Transitions ===== */
+
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+  --transition-all: all 200ms ease;
+
+  /* ===== Z-Index Scale ===== */
+
+  --z-base: 0;
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-fixed: 30;
+  --z-modal-backdrop: 40;
+  --z-modal: 50;
+  --z-popover: 60;
+  --z-tooltip: 70;
+
+  /* ===== Component-Specific Tokens ===== */
+
+  /* Header */
+  --header-height: 3.5rem; /* 56px */
+  --header-thin-height: 2.25rem; /* 36px - thin header variant */
+  --header-bg: #ffffff;
+  --header-border: #e6eef7;
+
+  /* Hero Section */
+  --hero-bg: var(--hero);
+  --hero-text: #ffffff;
+  --hero-padding-y: 4rem; /* 64px */
+
+  /* Stepper */
+  --stepper-circle-size: 2.5rem; /* 40px */
+  --stepper-line-width: 2px;
+  --stepper-active-color: var(--brand);
+  --stepper-complete-color: var(--brand);
+  --stepper-inactive-color: var(--daikin-gray-300);
+
+  /* Input/Form Controls */
+  --input-height: 2.75rem; /* 44px */
+  --input-padding-x: 0.75rem; /* 12px */
+  --input-border-width: 1px;
+  --input-border-color: var(--border-light);
+  --input-border-focus: var(--focus-ring);
+  --input-bg: #ffffff;
+  --input-bg-disabled: var(--daikin-gray-50);
+  --input-text: var(--text-primary);
+  --input-placeholder: var(--text-muted);
+
+  /* Buttons */
+  --button-height: 2.75rem; /* 44px */
+  --button-padding-x: 1.5rem; /* 24px */
+  --button-border-radius: var(--radius-pill);
+  --button-primary-bg: var(--cta);
+  --button-primary-hover: var(--cta-hover);
+  --button-primary-text: #ffffff;
+  --button-secondary-bg: var(--secondary);
+  --button-secondary-hover: var(--secondary-hover);
+  --button-secondary-text: var(--text-primary);
+
+  /* Cards */
+  --card-bg: #ffffff;
+  --card-border: var(--border-light);
+  --card-border-width: 1px;
+  --card-border-radius: var(--radius-card);
+  --card-padding: 1.5rem; /* 24px */
+  --card-shadow: var(--shadow-card);
+
+  /* Chart Colors */
+  --chart-baseline: #2e9ad8;
+  --chart-daikin: #2ca66a;
+  --chart-accent-1: #6ec1ff;
+  --chart-accent-2: #e67e50;
+  --chart-grid: #e6eef7;
+  --chart-axis: #6b7b8a;
+
+  /* Metrics/KPI Cards */
+  --metric-value-size: 2.25rem; /* 36px */
+  --metric-icon-size: 2.5rem; /* 40px */
+
+  /* Table */
+  --table-header-bg: #f7fafc;
+  --table-border: #e6eef7;
+  --table-row-hover: rgba(230, 238, 247, 0.5);
+}
+
+/* ===== Dark Mode Support (Optional) ===== */
+/* 
+[data-theme="dark"] {
+  --bg: #1A202C;
+  --bg-page: #2D3748;
+  --surface: #2D3748;
+  --text-primary: #F7FAFC;
+  --text-secondary: #B0B8C5;
+  --border-light: #4A5568;
+  ... (add dark variants as needed)
+}
+*/

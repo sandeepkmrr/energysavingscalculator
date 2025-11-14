@@ -71,7 +71,7 @@ export function InfoTooltip({
         aria-describedby={tooltipId}
         aria-expanded={open}
         aria-haspopup="true"
-        className="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full border border-daikin-gray-200 bg-white text-[0.75rem] text-daikin-gray-500 transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+        className="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full border border-daikin-gray-100 bg-white text-[0.75rem] text-daikin-gray-500 transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cta focus-visible:ring-offset-2"
       >
         <span aria-hidden="true">ℹ️</span>
       </button>
@@ -83,7 +83,7 @@ export function InfoTooltip({
         data-state={open ? 'open' : 'closed'}
         aria-hidden={!open}
         className={cn(
-          'pointer-events-none absolute left-1/2 top-full z-20 mt-2 w-72 max-w-xs -translate-x-1/2 rounded-[6px] border border-daikin-gray-200 bg-daikin-gray-100 px-3 py-2 text-sm leading-relaxed text-daikin-gray-700 opacity-0 shadow-lg transition-opacity duration-150',
+          'pointer-events-none absolute left-1/2 top-full z-20 mt-2 w-72 max-w-xs -translate-x-1/2 rounded-md border border-daikin-gray-100 bg-white px-4 py-3 text-xs leading-relaxed text-daikin-gray-500 opacity-0 shadow-card transition-opacity duration-150',
           open && 'pointer-events-auto opacity-100',
           tooltipClassName
         )}
