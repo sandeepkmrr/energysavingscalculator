@@ -44,7 +44,7 @@ export function HeroIntro({ onLearnMore, className = '' }: HeroIntroProps) {
           <p className="text-lg md:text-xl lg:text-2xl font-semibold uppercase tracking-widest text-white/80 mb-3">
             Life Cycle Cost Estimator for Invertor products
           </p>
-          <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-white mb-4 leading-tight">
+          <h1 className="text-base md:text-lg lg:text-xl font-bold text-white mb-4 leading-tight">
             Enter your Zip/Postal code to get started.
           </h1>
 
