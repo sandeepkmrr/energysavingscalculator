@@ -127,7 +127,7 @@ export function Header({ variant = 'default', className = '' }: HeaderProps) {
                 href="/guide"
                 className="text-base font-semibold text-daikin-gray-700 hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cta focus-visible:ring-offset-2 rounded-md px-3 py-2"
               >
-                Buyer's Guide
+                Buyer&apos;s Guide
               </Link>
               <Link
                 href="/solutions"

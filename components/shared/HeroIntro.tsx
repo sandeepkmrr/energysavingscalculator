@@ -98,8 +98,8 @@ export function HeroIntro({ onLearnMore, className = '' }: HeroIntroProps) {
                   className="text-sm text-white/80 text-center mb-2"
                   role="status"
                 >
-                  We'll use your location to provide accurate climate data for
-                  your energy calculations
+                  We&apos;ll use your location to provide accurate climate data
+                  for your energy calculations
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-white/70">
                   <span>Try:</span>
