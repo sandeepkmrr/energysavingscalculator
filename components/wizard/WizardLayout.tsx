@@ -7,8 +7,9 @@ import { ReactNode, useEffect } from 'react';
 import { useWizard } from '@/contexts/WizardContext';
 
 export interface WizardLayoutProps {
-  children: ReactNode;
+  children?: ReactNode;
   currentStep: number;
+  sections?: ReactNode[];
 }
 
 const WIZARD_STEPS = [
@@ -17,7 +18,11 @@ const WIZARD_STEPS = [
   'Step 3: Results',
 ];
 
-export function WizardLayout({ children, currentStep }: WizardLayoutProps) {
+export function WizardLayout({
+  children,
+  currentStep,
+  sections,
+}: WizardLayoutProps) {
   const { setCurrentStep } = useWizard();
 
   useEffect(() => {
@@ -29,12 +34,18 @@ export function WizardLayout({ children, currentStep }: WizardLayoutProps) {
       <Header />
       <main className="flex-1 container mx-auto px-4 py-10">
         <div className="max-w-5xl mx-auto space-y-6">
-          <div className="bg-white px-8 py-6 rounded-card shadow-card">
-            <Stepper steps={WIZARD_STEPS} currentStep={currentStep} />
+          <div className="bg-white px-8 py-6 rounded-card shadow-card space-y-4">
+            <Stepper
+              steps={WIZARD_STEPS}
+              currentStep={currentStep}
+              contents={sections}
+            />
           </div>
-          <div className="bg-white px-8 py-8 rounded-card shadow-card">
-            {children}
-          </div>
+          {!sections && (
+            <div className="bg-white px-8 py-8 rounded-card shadow-card">
+              {children}
+            </div>
+          )}
         </div>
       </main>
       <SustainabilityBanner />

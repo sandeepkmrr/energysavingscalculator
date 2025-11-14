@@ -1,31 +1,30 @@
+'use client';
+
 import { Suspense } from 'react';
 import { WizardLayout } from '@/components/wizard/WizardLayout';
 import { ProjectInfo } from '@/components/wizard/ProjectInfo';
-
-function ProjectInfoLoader() {
-  return (
-    <div className="flex items-center justify-center py-12">
-      <div className="text-center">
-        <div
-          className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-          role="status"
-        >
-          <span className="sr-only">Loading...</span>
-        </div>
-        <p className="mt-4 text-sm text-daikin-gray-600">
-          Loading project information...
-        </p>
-      </div>
-    </div>
-  );
-}
+import { SystemSetup } from '@/components/wizard/SystemSetup';
+import { ResultsDashboard } from '@/components/wizard/ResultsDashboard';
+import { ProjectInfoLoader } from '@/components/wizard/ProjectInfoLoader';
+import { useProjectData } from '@/hooks/useProjectData';
 
 export default function WizardProjectPage() {
+  const project = useProjectData();
+
   return (
-    <WizardLayout currentStep={1}>
-      <Suspense fallback={<ProjectInfoLoader />}>
-        <ProjectInfo />
-      </Suspense>
-    </WizardLayout>
+    <WizardLayout
+      currentStep={1}
+      sections={[
+        <Suspense fallback={<ProjectInfoLoader />} key="project">
+          <ProjectInfo />
+        </Suspense>,
+        <div key="system" className="space-y-6">
+          <SystemSetup />
+        </div>,
+        <div key="results" className="space-y-6">
+          <ResultsDashboard project={project} results={project.results} />
+        </div>,
+      ]}
+    />
   );
 }
